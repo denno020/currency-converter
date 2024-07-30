@@ -18,9 +18,9 @@ const Rates = () => {
     const [fromCurrency, setFromCurrency] = useState('AU');
     const [toCurrency, setToCurrency] = useState('US');
 
-    const [exchangeRate, setExchangeRate] = useState(0.7456);
     const [progression, setProgression] = useState(0);
     const [loading, setLoading] = useState(false);
+    const { amount, setAmount, exchangeRate, setExchangeRate } = useConversionContext();
 
     const Flag = ({ code }) => (
         <img alt={code || ''} src={`/img/flags/${code || ''}.svg`} width="20px" className={classes.flag} />
@@ -109,7 +109,7 @@ const Rates = () => {
                 />
 
                 <div className={classes.rowWrapper}>
-                    <Input />
+                        <Input onUpdate={setAmount} />
                 </div>
             </div>
         </div>
