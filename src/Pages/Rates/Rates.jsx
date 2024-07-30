@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import Calculations from '../../Components/Calculations';
 import DropDown from '../../Components/DropDown';
 import Input from '../../Components/Input';
 import ProgressBar from '../../Components/ProgressBar';
 import Loader from '../../Components/Loader';
+
+import { useConversionContext } from '../../context/ConversionContext';
 
 import { useAnimationFrame } from '../../Hooks/useAnimationFrame';
 import { ReactComponent as Transfer } from '../../Icons/Transfer.svg';
@@ -109,7 +112,19 @@ const Rates = () => {
                 />
 
                 <div className={classes.rowWrapper}>
+                    <div style={{ marginRight: '20px' }}>
                         <Input onUpdate={setAmount} />
+                    </div>
+
+                    <div className={classes.exchangeWrapper}>
+                        <div className={classes.transferIcon}>
+                            <Transfer height={'25px'} />
+                        </div>
+                        <div className={classes.rate} style={{ visibility: 'hidden' }}>{exchangeRate}</div>
+                    </div>
+                    <div style={{ marginLeft: '20px' }}>
+                        <Calculations amount={amount} exchangeRate={exchangeRate} />
+                    </div>
                 </div>
             </div>
         </div>
