@@ -20,6 +20,10 @@
     line-height: 33px;
     width: 100%;
     margin-bottom: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
 }
 
 .rowWrapper {
@@ -57,7 +61,6 @@
 .loaderWrapper {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
 }
 .slow {
     transition: all 1s cubic-bezier(0.55, 0.055, 0.675, 0.19) !important;

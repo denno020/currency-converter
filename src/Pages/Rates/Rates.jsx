@@ -50,7 +50,14 @@ const Rates = () => {
     return (
         <div className={classes.container}>
             <div className={classes.content}>
-                <div className={classes.heading}>Currency Conversion</div>
+                <div className={classes.heading}>
+                    Currency Conversion
+                    {loading && (
+                        <div className={classes.loaderWrapper}>
+                            <Loader width={'25px'} height={'25px'} />
+                        </div>
+                    )}
+                </div>
 
                 <div className={classes.rowWrapper}>
                     <div>
@@ -104,12 +111,6 @@ const Rates = () => {
                 <div className={classes.rowWrapper}>
                     <Input />
                 </div>
-
-                {loading && (
-                    <div className={classes.loaderWrapper}>
-                        <Loader width={'25px'} height={'25px'} />
-                    </div>
-                )}
             </div>
         </div>
     );
