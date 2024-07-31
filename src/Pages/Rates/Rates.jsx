@@ -10,6 +10,8 @@ import { useConversionContext } from '../../context/ConversionContext';
 import { useAnimationFrame } from '../../Hooks/useAnimationFrame';
 import { ReactComponent as Transfer } from '../../Icons/Transfer.svg';
 
+import { fetchRate } from '../../services/fetch-rate';
+
 import classes from './Rates.module.css';
 
 import CountryData from '../../Libs/Countries.json';
@@ -32,9 +34,8 @@ const Rates = () => {
     const fetchData = useCallback(() => {
         if (!loading) {
             setLoading(true);
-
-            fetch(`https://rates.staging.api.paytron.com/rate/public?buyCurrency=${countryToCurrency[toCurrency]}&sellCurrency=${countryToCurrency[fromCurrency]}`).then(res => res.json()).then((data) => {
-                setExchangeRate(data.retailRate);
+            fetchRate({ buyCurrency: toCurrency, sellCurrency: fromCurrency }).then((rate) => {
+                setExchangeRate(rate);
                 setLoading(false);
             })
         }
