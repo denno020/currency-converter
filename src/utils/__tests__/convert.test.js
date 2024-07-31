@@ -1,7 +1,7 @@
 import { convert } from '../convert'
 
 describe('convert', () => {
-    it('should convert floating numbercorrectly', () => {
+    it('should convert floating number correctly', () => {
         const { base, ofx } = convert({ amount: 100, exchangeRate: 0.74 });
         expect(base).toBe(74);
         expect(ofx).toBe(73.63);
