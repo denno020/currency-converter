@@ -6,7 +6,7 @@ import classes from './Calculations.module.css';
 const Calculations = (props) => {
     const { amount, currency, exchangeRate } = props;
 
-    const { base, ofx } = convert(amount, exchangeRate);
+    const { base, ofx } = convert({ amount, exchangeRate });
 
     return (
         <div aria-live="polite">
