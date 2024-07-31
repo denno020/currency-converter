@@ -1,4 +1,4 @@
-const ofxMarkup = 0.05;
+import { getOFXRate } from './get-ofx-rate'
 
 /**
  * Convert a given amount using the flat rate, but also the OFX mark up rate
@@ -9,7 +9,7 @@ const ofxMarkup = 0.05;
  * @returns {{ base: number, ofx: number }}
  */
 export const convert = ({ amount, exchangeRate }) => {
-    const ofxRate = exchangeRate - (exchangeRate * ofxMarkup);
+    const ofxRate = getOFXRate(exchangeRate);
 
     return {
         base: amount * exchangeRate,
