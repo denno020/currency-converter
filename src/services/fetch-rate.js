@@ -10,6 +10,13 @@ import countryToCurrency from '../Libs/CountryCurrency.json';
  */
 export const fetchRate = ({ buyCurrency, sellCurrency }) => {
     return fetch(`https://rates.staging.api.paytron.com/rate/public?buyCurrency=${countryToCurrency[buyCurrency]}&sellCurrency=${countryToCurrency[sellCurrency]}`)
-        .then(res => res.json())
-        .then((data) => data.retailRate);
+        .then(async res => {
+            const body = await res.json();
+
+            if (res.ok) {
+                return body.retailRate;
+            }
+            
+            throw new Error(body.detail)
+        });
 }
