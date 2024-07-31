@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Calculations from '../../Components/Calculations';
 import DropDown from '../../Components/DropDown';
 import Input from '../../Components/Input';
@@ -51,10 +51,10 @@ const Rates = () => {
         });
     });
 
-    // useEffect(() => {
-    //     fetchData();
-    //     setProgression(0); // Reset progress bar, because we've just requested new data
-    // }, [fromCurrency, toCurrency])
+    useEffect(() => {
+        fetchData();
+        setProgression(0); // Reset progress bar, because we've just requested new data
+    }, [fromCurrency, toCurrency])
 
     return (
         <div className={classes.container}>
