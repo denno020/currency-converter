@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import { useState, useRef } from 'react';
+import { useOutsideClick } from '@chakra-ui/react-use-outside-click';
 
 import PropTypes from 'prop-types';
 
 import classes from './DropDown.module.css';
 
 const DropDown = (props) => {
+    const ref = useRef(null);
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
         setOpen(!open);
     };
+
+    useOutsideClick({
+        ref,
+        handler: () => setOpen(false)
+    });
 
     const handleSelect = (key) => {
         props.setSelected(key);
@@ -17,7 +24,7 @@ const DropDown = (props) => {
     };
 
     return (
-        <div className={`${classes.container} ${props.className}`} style={props.style}>
+        <div className={`${classes.container} ${props.className}`} style={props.style} ref={ref}>
             {props.label && <span>{props.label}</span>}
             <button onClick={handleOpen} className={classes.dropdown}>
                 {props.leftIcon}
