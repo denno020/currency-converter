@@ -29,13 +29,14 @@ const Rates = () => {
         <img alt={code || ''} src={`/img/flags/${code || ''}.svg`} width="20px" className={classes.flag} />
     );
 
-    const fetchData = async () => {
+    const fetchData = () => {
         if (!loading) {
             setLoading(true);
 
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-
-            setLoading(false);
+            fetch(`https://rates.staging.api.paytron.com/rate/public?buyCurrency=${countryToCurrency[toCurrency]}&sellCurrency=${countryToCurrency[fromCurrency]}`).then(res => res.json()).then((data) => {
+                setExchangeRate(data.retailRate);
+                setLoading(false);
+            })
         }
     };
 
