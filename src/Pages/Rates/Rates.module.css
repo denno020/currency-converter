@@ -65,3 +65,11 @@
 .slow {
     transition: all 1s cubic-bezier(0.55, 0.055, 0.675, 0.19) !important;
 }
+
+.hidden {
+    visibility: hidden;
+}
+
+.errorContainer {
+    color: #B00020;
+}

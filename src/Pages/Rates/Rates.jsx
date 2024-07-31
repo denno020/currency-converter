@@ -22,6 +22,7 @@ let countries = CountryData.CountryCodes;
 const Rates = () => {
     const [fromCurrency, setFromCurrency] = useState('AU');
     const [toCurrency, setToCurrency] = useState('US');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [progression, setProgression] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -34,15 +35,23 @@ const Rates = () => {
     const fetchData = useCallback(() => {
         if (!loading) {
             setLoading(true);
-            fetchRate({ buyCurrency: toCurrency, sellCurrency: fromCurrency }).then((rate) => {
-                setExchangeRate(rate);
-                setLoading(false);
-            })
+            fetchRate({ buyCurrency: toCurrency, sellCurrency: fromCurrency })
+                .then((rate) => {
+                    setExchangeRate(rate);
+                    setErrorMessage('');
+                })
+                .catch((error) => {
+                    setErrorMessage(error.toString());
+                    setExchangeRate(undefined);
+                })
+                .finally(() => {
+                    setLoading(false);
+                })
         }
     }, [toCurrency, fromCurrency]);
 
     // Demo progress bar moving :)
-    useAnimationFrame(!loading, (deltaTime) => {
+    useAnimationFrame(!loading && errorMessage === '', (deltaTime) => {
         setProgression((prevState) => {
             if (prevState > 0.998) {
                 fetchData();
@@ -68,6 +77,12 @@ const Rates = () => {
                         </div>
                     )}
                 </div>
+
+                {errorMessage !== '' && (
+                    <div className={classes.errorContainer}>
+                        {errorMessage}
+                    </div>
+                )}
 
                 <div className={classes.rowWrapper}>
                     <div>
@@ -120,7 +135,7 @@ const Rates = () => {
 
                 <div className={classes.rowWrapper}>
                     <div style={{ marginRight: '20px' }}>
-                        <Input onUpdate={setAmount} />
+                        <Input onUpdate={setAmount} disabled={errorMessage !== ''} />
                     </div>
 
                     <div className={classes.exchangeWrapper}>
@@ -130,7 +145,7 @@ const Rates = () => {
                         <div className={classes.rate} style={{ visibility: 'hidden' }}>{exchangeRate}</div>
                     </div>
                     <div style={{ marginLeft: '20px' }}>
-                        <Calculations amount={amount} currency={toCurrency} exchangeRate={exchangeRate} />
+                        <Calculations amount={amount} currency={toCurrency} exchangeRate={exchangeRate} className={errorMessage === '' ? '' : classes.hidden} />
                     </div>
                 </div>
             </div>
