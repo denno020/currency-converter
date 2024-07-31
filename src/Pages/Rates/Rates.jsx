@@ -123,7 +123,7 @@ const Rates = () => {
                         <div className={classes.rate} style={{ visibility: 'hidden' }}>{exchangeRate}</div>
                     </div>
                     <div style={{ marginLeft: '20px' }}>
-                        <Calculations amount={amount} exchangeRate={exchangeRate} />
+                        <Calculations amount={amount} currency={toCurrency} exchangeRate={exchangeRate} />
                     </div>
                 </div>
             </div>
