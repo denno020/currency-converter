@@ -15,14 +15,19 @@ const Input = (props) => {
     return (
         <div>
             <label htmlFor="amount">Amount</label>
-            <input type="tel" pattern="[0-9]+" name="amount" id="amount" className={classes.input} onChange={e => debouncedUpdate(e.target.value)} required />
+            <input type="tel" pattern="[0-9]+" name="amount" id="amount" className={classes.input} onChange={e => debouncedUpdate(e.target.value)} required disabled={props.disabled} />
         </div>
     )
 
 }
 
 Input.propTypes = {
-    onUpdate: PropTypes.func
+    onUpdate: PropTypes.func,
+    disabled: PropTypes.bool
 };
+
+Input.defaultProps = {
+    disabled: false
+}
 
 export default Input;
