@@ -29,7 +29,6 @@
 .rowWrapper {
     display: flex;
     flex-direction: row;
-    margin-inline-end: 20px;
     align-items: center;
 }
 .exchangeWrapper {
