@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import DropDown from '../../Components/DropDown';
+import Input from '../../Components/Input';
 import ProgressBar from '../../Components/ProgressBar';
 import Loader from '../../Components/Loader';
 
@@ -98,8 +99,11 @@ const Rates = () => {
                 <ProgressBar
                     progress={progression}
                     animationClass={loading ? classes.slow : ''}
-                    style={{ marginTop: '20px' }}
                 />
+
+                <div className={classes.rowWrapper}>
+                    <Input />
+                </div>
 
                 {loading && (
                     <div className={classes.loaderWrapper}>
