@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Calculations from '../../Components/Calculations';
 import DropDown from '../../Components/DropDown';
 import Input from '../../Components/Input';
@@ -29,7 +29,7 @@ const Rates = () => {
         <img alt={code || ''} src={`/img/flags/${code || ''}.svg`} width="20px" className={classes.flag} />
     );
 
-    const fetchData = () => {
+    const fetchData = useCallback(() => {
         if (!loading) {
             setLoading(true);
 
@@ -38,7 +38,7 @@ const Rates = () => {
                 setLoading(false);
             })
         }
-    };
+    }, [toCurrency, fromCurrency]);
 
     // Demo progress bar moving :)
     useAnimationFrame(!loading, (deltaTime) => {
@@ -50,6 +50,11 @@ const Rates = () => {
             return (prevState + deltaTime * 0.0001) % 1;
         });
     });
+
+    // useEffect(() => {
+    //     fetchData();
+    //     setProgression(0); // Reset progress bar, because we've just requested new data
+    // }, [fromCurrency, toCurrency])
 
     return (
         <div className={classes.container}>
