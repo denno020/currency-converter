@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import Calculations from '../../Components/Calculations';
 import DropDown from '../../Components/DropDown';
 import Input from '../../Components/Input';
 import ProgressBar from '../../Components/ProgressBar';
 import Loader from '../../Components/Loader';
+
+import { useConversionContext } from '../../context/ConversionContext';
 
 import { useAnimationFrame } from '../../Hooks/useAnimationFrame';
 import { ReactComponent as Transfer } from '../../Icons/Transfer.svg';
@@ -18,9 +21,9 @@ const Rates = () => {
     const [fromCurrency, setFromCurrency] = useState('AU');
     const [toCurrency, setToCurrency] = useState('US');
 
-    const [exchangeRate, setExchangeRate] = useState(0.7456);
     const [progression, setProgression] = useState(0);
     const [loading, setLoading] = useState(false);
+    const { amount, setAmount, exchangeRate, setExchangeRate } = useConversionContext();
 
     const Flag = ({ code }) => (
         <img alt={code || ''} src={`/img/flags/${code || ''}.svg`} width="20px" className={classes.flag} />
@@ -50,7 +53,14 @@ const Rates = () => {
     return (
         <div className={classes.container}>
             <div className={classes.content}>
-                <div className={classes.heading}>Currency Conversion</div>
+                <div className={classes.heading}>
+                    Currency Conversion
+                    {loading && (
+                        <div className={classes.loaderWrapper}>
+                            <Loader width={'25px'} height={'25px'} />
+                        </div>
+                    )}
+                </div>
 
                 <div className={classes.rowWrapper}>
                     <div>
@@ -102,14 +112,20 @@ const Rates = () => {
                 />
 
                 <div className={classes.rowWrapper}>
-                    <Input />
-                </div>
-
-                {loading && (
-                    <div className={classes.loaderWrapper}>
-                        <Loader width={'25px'} height={'25px'} />
+                    <div style={{ marginRight: '20px' }}>
+                        <Input onUpdate={setAmount} />
                     </div>
-                )}
+
+                    <div className={classes.exchangeWrapper}>
+                        <div className={classes.transferIcon}>
+                            <Transfer height={'25px'} />
+                        </div>
+                        <div className={classes.rate} style={{ visibility: 'hidden' }}>{exchangeRate}</div>
+                    </div>
+                    <div style={{ marginLeft: '20px' }}>
+                        <Calculations amount={amount} currency={toCurrency} exchangeRate={exchangeRate} />
+                    </div>
+                </div>
             </div>
         </div>
     );
